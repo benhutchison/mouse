@@ -6,12 +6,6 @@ lazy val root = project.in(file(".")).aggregate(js, jvm).
   settings(
     publish / skip := true,
     sonatypeProfileName := "org.typelevel",
-    publishTo := Some(
-      if (isSnapshot.value)
-        Opts.resolver.sonatypeSnapshots
-      else
-        Opts.resolver.sonatypeStaging
-    ),
   )
 
 lazy val cross = crossProject.in(file(".")).
@@ -50,6 +44,13 @@ lazy val cross = crossProject.in(file(".")).
       commitNextVersion,
     )
   )
+
+ThisBuild / publishTo := Some(
+  if (isSnapshot.value)
+    Opts.resolver.sonatypeSnapshots
+  else
+    Opts.resolver.sonatypeStaging
+)
 
 lazy val jvm = cross.jvm
 lazy val js = cross.js
